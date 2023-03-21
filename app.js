@@ -4,14 +4,21 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const nunjucks = require('nunjucks');
+var session = require('express-session')
 
 const indexRouter = require('./routes/index');
 
 const app = express();
 
+app.use(session({       //Sessionens inställningar
+    secret: "tomatosaucetomboysupremacytomatosauce",
+    saveUninitialized:true,
+    resave: false
+}));
+
 nunjucks.configure('views', {
     autoescape: true,
-    express: app,
+    express: app
 });
 
 app.use(logger('dev'));

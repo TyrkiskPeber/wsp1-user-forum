@@ -61,7 +61,7 @@ router.get('/profile', async function (req, res, next) {
 router.post('/logout', async function (req, res, next) {
     if (req.session.user) {
         req.session.destroy()
-        return res.redirect('/')
+        return res.redirect('/forum')
     }
     else {
         return res.status(401).send('Access denied')
