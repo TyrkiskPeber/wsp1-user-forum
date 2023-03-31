@@ -1,8 +1,32 @@
 body {
-    background-color: #6d4a9a;
+    background-color: #29283f;
     margin: 0%;
     color: #fbf7f4;
     font-family: sans-serif;
+}
+
+.kropp {
+    padding: 3rem;
+}
+
+.forum {
+    align-items: center;
+    background-color: #6d4a9a;
+    padding: 1rem;
+}
+
+.login {
+    font-size: 1.5rem;
+    display: flex;
+    padding: 2rem;
+    justify-content: center;
+}
+
+.left-login {
+    padding-right: 10rem;
+}
+.sess{
+    
 }
 
 //navbar grejer
@@ -14,7 +38,7 @@ body {
     padding: 1rem;
     justify-content: space-between;
     background-color: #eade72;
-    font-size: 1.25rem;
+    font-size: 1.75rem;
     color: #08070c;
 }
 
@@ -33,6 +57,7 @@ body {
     background-color: transparent;
 }
 
+
 //media delar. Mobil etc
 @media (max-width: 768px) {
     .navbar {
@@ -48,8 +73,4 @@ body {
     .navbar__toggle {
         display: none;
     }
-}
-
-.kropp {
-    padding: 3rem;
 }

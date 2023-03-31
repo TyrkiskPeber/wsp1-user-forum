@@ -1,32 +1,34 @@
 <!DOCTYPE html>
 <html lang="sv">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="../css/style.css">
-        <script src="../burger.js"></script>
-        <title>{{ title }}</title>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../burger.js"></script>
+    <title>{{ title }}</title>
+</head>
 
-    <body>
-        <nav class="navbar">
-            <a class="brand" href="forum">Brand</a>
-            <button class="navbar__toggle">
-                <span class="material-icons"> menu </span>
-            </button>
-            <div class="navbar__collapse">
-                <a class="nav-link" href="forum">Hem</a>
-                <a class="nav-link" href="#">Länk</a>
-                <a class="nav-link" href="login">Log in</a>
-                <a class="nav-link" href="register">Sign Up</a>
-            </div>
-        </nav>
-        <div class="kropp">
-            {% block content %}{% endblock %}
+<body>
+    <nav class="navbar">
+        <img src="/imgs/W.png" alt="Logo" width="60px" height="60px">
+        <button class="navbar__toggle">
+            <span class="material-icons"> menu </span>
+        </button>
+        <div class="navbar__collapse">
+            <a class="nav-link" href="forum">Hem</a>
+            <a class="nav-link" href="new-post">Post Something</a>
+            <div class="sess">
+            <a class="nav-link" href="login">Login</a>
+            <a class="nav-link" href="register">Sign Up</a>
         </div>
+        </div>
+    </nav>
+    <div class="kropp"> 
+        {% block content %}{% endblock %}
+    </div>
 
-    </body>
+</body>
 
 </html>
