@@ -1,12 +1,12 @@
 {% extends "layout.njk" %}
 {% block content %}
 
-{% for rows in rows%}
+    {% for rows in rows%}
 
-<ul div class="forum">
-    <h1>{{rows.title}}</h1>
-    <h2>{{rows.content}}</h2>
-    <p>{{rows.createdAt}}</p>
-</ul>
-    {%endfor%}
+        <ul div class="forum">
+            <h1>{{rows.title}}</h1>
+            <h2>{{rows.content}}</h2>
+            <p>{{rows.createdAt}}</p>
+        </ul>
+        {%endfor%}
     {% endblock %}
