@@ -3,7 +3,7 @@
 
 
     <form action="/new-post" method="post">
-    <div class="center">
+    <div class="post">
         <label for="author">Författare</label>
         <input type="text" name="author" id="author">
         <label for="title">Titel</label>
@@ -13,11 +13,5 @@
         <button type="submit">Skicka</button>
         </div>
     </form>
-<label for="author">Författare</label>
-<select name="author" id="author">
-    {% for user in users %}
-    <option value="{{ user.id }}">{{ user.name }}</option>
-    {% endfor %}
-</select>
 
 {% endblock %}
