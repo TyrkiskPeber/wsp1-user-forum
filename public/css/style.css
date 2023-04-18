@@ -15,8 +15,13 @@ body {
   padding: 1rem;
 }
 
+textarea {
+  resize: none;
+}
+
 .post {
-  justify-content: center;
+  display: flex;
+  flex-direction: column;
 }
 
 .login {
@@ -40,6 +45,9 @@ body {
   background-color: #eade72;
   font-size: 1.75rem;
   color: #08070c;
+}
+.navbar a:hover {
+  color: #ed1512;
 }
 
 .nav-link {

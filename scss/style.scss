@@ -5,6 +5,7 @@ body {
     font-family: sans-serif;
 }
 
+
 .kropp {
     padding: 3rem;
 }
@@ -15,8 +16,13 @@ body {
     padding: 1rem;
 }
 
-.post{
-    justify-content: center;
+textarea {
+    resize: none;
+}
+
+.post {
+    display: flex;
+    flex-direction: column;
 }
 
 .login {
@@ -29,9 +35,8 @@ body {
 .left-login {
     padding-right: 10rem;
 }
-.sess{
-    
-}
+
+.sess {}
 
 //navbar grejer
 .navbar {
@@ -44,6 +49,10 @@ body {
     background-color: #eade72;
     font-size: 1.75rem;
     color: #08070c;
+
+    a:hover {
+        color: #ed1512;
+    }
 }
 
 .nav-link {
