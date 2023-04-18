@@ -2,16 +2,17 @@
 {% block content %}
 
 
-    <form action="/new-post" method="post">
+<form action="/new-post" method="post">
     <div class="post">
         <label for="author">Författare</label>
         <input type="text" name="author" id="author">
         <label for="title">Titel</label>
         <input type="text" name="title" id="title">
+        <br>
         <label for="content">Innehåll</label>
         <textarea name="content" id="content" cols="30" rows="10"></textarea>
         <button type="submit">Skicka</button>
-        </div>
-    </form>
+    </div>
+</form>
 
 {% endblock %}
