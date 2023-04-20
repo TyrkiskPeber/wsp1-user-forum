@@ -11,7 +11,7 @@ const indexRouter = require('./routes/index');
 const app = express();
 
 app.use(session({       //Sessionens inställningar
-    secret: "tomatosaucetomboysupremacytomatosauce",
+    secret: "tomatosaucetomatosaucetomboysupremacytomatosaucetomatosauce",
     saveUninitialized:true,
     resave: false
 }));

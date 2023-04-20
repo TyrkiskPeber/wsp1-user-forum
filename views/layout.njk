@@ -16,16 +16,23 @@
         <button class="navbar__toggle">
             <span class="material-icons"> Menu </span>
         </button>
+        {% if user %}
         <div class="navbar__collapse">
             <a class="nav-link" href="forum">Hem</a>
             <a class="nav-link" href="new-post">Post Something</a>
+            <a class="nav-link" href="profile">Profile</a>
+        </div>
+        {% else %}
+        <div class="navbar__collapse">
+            <a class="nav-link" href="forum">Hem</a>
             <a class="nav-link" href="login">Login</a>
             <a class="nav-link" href="register">Sign Up</a>
         </div>
-        </div>
+        {% endif %}
     </nav>
     <div class="kropp">
-        {% block content %}{% endblock %}
+        {% block content %}
+        {% endblock %}
     </div>
 
 </body>

@@ -7,12 +7,6 @@ const promisePool = db.promise();
 
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
-    res.render('index.njk',
-        {
-            title: 'Login ALC'
-        });
-});
 
 router.get('/login', async function (req, res, next) {
     res.render('login.njk',
@@ -49,7 +43,8 @@ router.post('/login', async function (req, res, next) {
 router.get('/profile', async function (req, res, next) {
     if (req.session.user) {        //Kollar ifall det finns en 'user' i sessionen
         res.render('profile.njk', {
-            name: req.session.user.name
+            name: req.session.user.name,
+            user: req.session.user || 0,
         })
     }
     else {
@@ -69,6 +64,7 @@ router.post('/logout', async function (req, res, next) {
 
 router.get('/register', async function (req, res, next) {
     res.render('register.njk')
+    
 
 })
 
@@ -136,7 +132,9 @@ router.get('/new-post', async function (req, res, next) {
     if (req.session.user) {        //Kollar ifall det finns en 'user' i sessionen
         res.render('new-post.njk', {
             title: 'Nytt inlägg',
+            user: req.session.user || 0,
             users,
+
         });
     }
     else {
@@ -150,6 +148,7 @@ router.get('/forum', async function (req, res, next) {
     res.render('forum.njk', {
         rows: rows,
         title: 'Nazarick',
+        user: req.session.user || 0,
 
     });
 });
