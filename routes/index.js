@@ -30,7 +30,9 @@ router.post('/login', async function (req, res, next) {
         const [user] = await promisePool.query(`SELECT * FROM lg09users WHERE name = ?`, [username])
         bcrypt.compare(password, user[0].password, function (err, result) {
             if (result === true) {
-                req.session.user = user[0]  //Ifall det går att logga in, spara användarens data i sessions variabeln 'user'
+                req.session.userid = user[0].id;
+                req.session.username = user[0].name;
+                req.session.loggedin;                               //Används för att visa relevanta knappar i nav
                 return res.redirect('/profile')
             }
             else {
@@ -41,19 +43,20 @@ router.post('/login', async function (req, res, next) {
 });
 
 router.get('/profile', async function (req, res, next) {
-    if (req.session.user) {        //Kollar ifall det finns en 'user' i sessionen
+    if (req.session.username && req.session.userid) {               //Kollar ifall det finns en 'user' i sessionen
         res.render('profile.njk', {
-            name: req.session.user.name,
-            user: req.session.user || 0,
-        })
+            name: req.session.username,
+        },
+        console.log(req.session.userid, req.session.username))
     }
     else {
-        return res.status(401).send('Access denied')
+        return res.status(401).send('Access denied'),
+        console.log(req.session.userid, req.session.username)
     }
 })
 
 router.post('/logout', async function (req, res, next) {
-    if (req.session.user) {
+    if (req.session.username && req.session.userid) {
         req.session.destroy()
         return res.redirect('/forum')
     }
@@ -86,12 +89,11 @@ router.post('/register', async function (req, res, next) {
     if (password == passwordConfirmation) {
 
         bcrypt.hash(password, 10, async function (err, hash) {
-            console.log(hash)
             const [rows] = await promisePool.query("SELECT * FROM lg09users WHERE name = ?", [username])
             console.log(rows[0])
             if (rows.length === 0) {
                 const [user] = await promisePool.query("INSERT INTO lg09users (name, password) VALUES (?, ?)", [username, hash])
-                req.session.user = user[0]
+                req.session.username = user[0].name
                 return res.redirect('/profile')
             }
             else {
@@ -121,7 +123,8 @@ router.get('/crypt/:password', async function (req, res, next) {
 
 
 router.post('/new-post', async function (req, res, next) {
-    const { author, title, content } = req.body;
+    const { title, content } = req.body;
+    const author = req.session.userid
     const [rows] = await promisePool.query("INSERT INTO lg09forum (authorId, title, content) VALUES (?, ?, ?)", [author, title, content]);
     res.redirect('/forum');
 });
@@ -129,10 +132,9 @@ router.post('/new-post', async function (req, res, next) {
 router.get('/new-post', async function (req, res, next) {
     const [users] = await promisePool.query(`SELECT lg09forum.*, lg09users.name FROM lg09forum
     JOIN lg09users ON lg09forum.authorId = lg09users.id`);
-    if (req.session.user) {        //Kollar ifall det finns en 'user' i sessionen
+    if (req.session.userid && req.session.username) {               //Kollar ifall det finns en 'user' i sessionen
         res.render('new-post.njk', {
             title: 'Nytt inlägg',
-            user: req.session.user || 0,
             users,
 
         });
@@ -148,7 +150,6 @@ router.get('/forum', async function (req, res, next) {
     res.render('forum.njk', {
         rows: rows,
         title: 'Nazarick',
-        user: req.session.user || 0,
 
     });
 });
