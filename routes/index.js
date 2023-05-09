@@ -32,7 +32,7 @@ router.post('/login', async function (req, res, next) {
             if (result === true) {
                 req.session.userid = user[0].id;
                 req.session.username = user[0].name;
-                req.session.loggedin;                               //Används för att visa relevanta knappar i nav
+                               //Används för att visa relevanta knappar i nav
                 return res.redirect('/profile')
             }
             else {
@@ -45,7 +45,7 @@ router.post('/login', async function (req, res, next) {
 router.get('/profile', async function (req, res, next) {
     if (req.session.username && req.session.userid) {               //Kollar ifall det finns en 'user' i sessionen
         res.render('profile.njk', {
-            name: req.session.username,
+            loggedin: req.session.username,
         },
         console.log(req.session.userid, req.session.username))
     }
@@ -136,8 +136,12 @@ router.get('/new-post', async function (req, res, next) {
         res.render('new-post.njk', {
             title: 'Nytt inlägg',
             users,
+            loggedin: req.session.username
 
         });
+        console.log(req.session.userid, req.session.username);
+        
+        
     }
     else {
         return res.status(401).send('Access denied, must be logged in to post')
@@ -146,10 +150,12 @@ router.get('/new-post', async function (req, res, next) {
 
 router.get('/forum', async function (req, res, next) {
     const [rows] = await promisePool.query(`SELECT lg09forum.*, lg09users.name FROM lg09forum
-    JOIN lg09users ON lg09forum.authorId = lg09users.id`);
+    JOIN lg09users ON lg09forum.authorId = lg09users.id
+    ORDER BY createdAt DESC`);
     res.render('forum.njk', {
         rows: rows,
         title: 'Nazarick',
+        loggedin: req.session.username
 
     });
 });

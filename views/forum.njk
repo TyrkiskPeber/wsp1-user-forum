@@ -6,7 +6,7 @@
         <ul div class="forum">
             <h1>{{rows.title}}</h1>
             <p>{{rows.content}}</p>
-            <p>Posted at {{ rows.createdAt }} by {{ rows.name }}</p>
+            <p>Posted at {{ rows.createdAt }} by <b>{{ rows.name }}</b></p>
         </ul>
         {%endfor%}
     {% endblock %}
