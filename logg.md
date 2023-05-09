@@ -7,3 +7,6 @@ Jag har arbetat med att försöka stoppa mysql injektioner. En bug stöttes på 
 
 ### 2023-04-21
 Tidigare problemet är nu löst. Jag har dock råkat skapa ett nytt problem som gör att det inte går att registrera. Jag ska nästa gång försöka lösa det och försöka få id att dyka upp på /profile.
+
+### 2023-05-09
+Löste så att forumet är sorteras efter hur nytt ett inlägg är. Insåg att majoriteten av mitt arbete och testande var gjort i fel repository.
