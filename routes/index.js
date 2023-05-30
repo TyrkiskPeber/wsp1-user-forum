@@ -31,8 +31,8 @@ router.post('/login', async function (req, res, next) {
         const [user] = await promisePool.query(`SELECT * FROM lg09users WHERE name = ?`, [username])
         bcrypt.compare(password, user[0].password, function (err, result) {
             if (result === true) {
-                req.session.userid = user[0].id;
-                req.session.username = user[0].name;
+            req.session.userid = user[0].id;
+            req.session.username = user[0].name;
                 //Används för att visa relevanta knappar i nav
                 return res.redirect('/profile')
             }
@@ -93,7 +93,9 @@ router.post('/register', async function (req, res, next) {
             const [rows] = await promisePool.query("SELECT * FROM lg09users WHERE name = ?", [username])
             console.log(rows[0])
             if (rows.length === 0) {
-                const [user] = await promisePool.query("INSERT INTO lg09users (name, password) VALUES (?, ?)", [username, hash])
+                const [acc] = await promisePool.query("INSERT INTO lg09users (name, password) VALUES (?, ?)", [username, hash])
+                const [user] = await promisePool.query(`SELECT * FROM lg09users WHERE name = ?`, [username])
+                req.session.userid = user[0].id;
                 req.session.username = user[0].name;
                 return res.redirect('/profile')
             }
