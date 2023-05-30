@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt')
+const validator = require('validator')
 
 const db = require('../utils/database.js');
 const promisePool = db.promise();
@@ -32,7 +33,7 @@ router.post('/login', async function (req, res, next) {
             if (result === true) {
                 req.session.userid = user[0].id;
                 req.session.username = user[0].name;
-                               //Används för att visa relevanta knappar i nav
+                //Används för att visa relevanta knappar i nav
                 return res.redirect('/profile')
             }
             else {
@@ -47,11 +48,11 @@ router.get('/profile', async function (req, res, next) {
         res.render('profile.njk', {
             loggedin: req.session.username,
         },
-        console.log(req.session.userid, req.session.username))
+            console.log(req.session.userid, req.session.username))
     }
     else {
         return res.status(401).send('Access denied'),
-        console.log(req.session.userid, req.session.username)
+            console.log(req.session.userid, req.session.username)
     }
 })
 
@@ -67,7 +68,7 @@ router.post('/logout', async function (req, res, next) {
 
 router.get('/register', async function (req, res, next) {
     res.render('register.njk')
-    
+
 
 })
 
@@ -93,7 +94,7 @@ router.post('/register', async function (req, res, next) {
             console.log(rows[0])
             if (rows.length === 0) {
                 const [user] = await promisePool.query("INSERT INTO lg09users (name, password) VALUES (?, ?)", [username, hash])
-                req.session.username = user[0].name
+                req.session.username = user[0].name;
                 return res.redirect('/profile')
             }
             else {
@@ -125,8 +126,31 @@ router.get('/crypt/:password', async function (req, res, next) {
 router.post('/new-post', async function (req, res, next) {
     const { title, content } = req.body;
     const author = req.session.userid
-    const [rows] = await promisePool.query("INSERT INTO lg09forum (authorId, title, content) VALUES (?, ?, ?)", [author, title, content]);
-    res.redirect('/forum');
+    /*if (!title) response.errors.push('A Title is required');
+    if (!body) response.errors.push('A message is required');
+    if (title && title.length <= 3)
+        response.errors.push('Your Title must be at least 3 characters long');
+    if (body && body.length <= 8)
+        response.errors.push('Your message must be at least 8 characters');
+
+        
+    if (response.errors.length === 0) {
+        */
+    const sanitize = (str) => {
+        let temp = str.trim();
+        temp = validator.stripLow(temp);
+        temp = validator.escape(temp);
+        return temp;
+    }
+    if (title) sanitizedTitle = sanitize(title);
+    if (content) sanitizedContent = sanitize(content);
+    try {
+
+        const [rows] = await promisePool.query("INSERT INTO lg09forum (authorId, title, content) VALUES (?, ?, ?)", [author, sanitizedTitle, sanitizedContent]);
+        res.redirect('/forum');
+    } catch (e) {
+        console.log(e);
+    }
 });
 
 router.get('/new-post', async function (req, res, next) {
@@ -140,8 +164,8 @@ router.get('/new-post', async function (req, res, next) {
 
         });
         console.log(req.session.userid, req.session.username);
-        
-        
+
+
     }
     else {
         return res.status(401).send('Access denied, must be logged in to post')
